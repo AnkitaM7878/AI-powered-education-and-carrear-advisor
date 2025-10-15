@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Career Guidance Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Starry night background animation */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #fff, transparent);
+            border-radius: 50%;
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% { 
+                transform: translateX(-100px) translateY(100px);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateX(300px) translateY(-300px);
+                opacity: 0;
+            }
+        }
+
+        /* Landing/Signup Page */
+        .landing-page {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .landing-content {
+            text-align: center;
+            max-width: 1200px;
+            padding: 40px 20px;
+        }
+
+        .landing-title {
+            font-size: 3.5em;
+            font-weight: 300;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .landing-subtitle {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .signup-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .skip-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .skip-link:hover {
+            color: #667eea;
+        }
+
+        /* Main Platform */
+        .main-platform {
+            display: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 0;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 18px 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab:last-child {
+            border-right: none;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .tab-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 0 0 15px 15px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: none;
+            min-height: 600px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Quiz Styling */
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .question {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #667eea;
+        }
+
+        .question h3 {
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            color: white;
+        }
+
+        /* Button Styling */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        /* Career Cards */
+        .career-paths {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .career-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .career-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: #667eea;
+        }
+
+        .career-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .career-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .career-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .career-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Enhanced Results Section */
+        .enhanced-results {
+            background: rgba(102, 126, 234, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .result-main {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .result-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .result-reasoning {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .alternative-recommendations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .recommendation-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* College Cards */
+        .colleges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        .college-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .college-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: #667eea;
+        }
+
+        .college-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .college-type {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .government {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .private {
+            background: rgba(233, 30, 99, 0.2);
+            color: #E91E63;
+            border: 1px solid rgba(233, 30, 99, 0.3);
+        }
+
+        .state-section {
+            margin-bottom: 40px;
+        }
+
+        .state-title {
+            color: #667eea;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.5);
+        }
+
+        /* AI Assessment */
+        .ai-assessment {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .assessment-input {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            min-height: 120px;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .assessment-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .ai-response {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-date {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .timeline-title {
+            color: white;
+            margin: 10px 0;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .timeline-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .landing-title {
+                font-size: 2.5em;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .nav-tab {
+                flex: 1 1 50%;
+            }
+            
+            .career-paths,
+            .colleges-grid,
+            .alternative-recommendations {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Landing/Signup Page -->
+    <div class="landing-page" id="landingPage">
+        <div class="landing-content">
+            <h1 class="landing-title">Explore the Career You Want to Live</h1>
+            <p class="landing-subtitle">Discover your potential and put your future to work</p>
+            
+            <div class="signup-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="currentClass">Current Class/Education Level</label>
+                    <select id="currentClass" class="form-input" required>
+                        <option value="">Select your current level</option>
+                        <option value="class-11">Class 11</option>
+                        <option value="class-12">Class 12</option>
+                        <option value="graduate">Graduate</option>
+                        <option value="postgraduate">Post Graduate</option>
+                    </select>
+                </div>
+                
+                <button type="button" class="btn-signup" onclick="enterPlatform()">Begin Your Journey</button>
+            </div>
+            
+            <a href="#" class="skip-link" onclick="enterPlatform()">Skip and explore as guest</a>
+        </div>
+    </div>
+
+    <!-- Main Platform -->
+    <div class="main-platform" id="mainPlatform">
+        <div class="container">
+            <div class="header">
+                <h1>Digital Career Guidance Platform</h1>
+                <p>Your Personalized Path to Success</p>
+            </div>
+            
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('aptitude')">Aptitude Test</button>
+                <button class="nav-tab" onclick="showTab('career-paths')">Career Paths</button>
+                <button class="nav-tab" onclick="showTab('colleges')">Colleges Directory</button>
+                <button class="nav-tab" onclick="showTab('ai-guidance')">AI Guidance</button>
+                <button class="nav-tab" onclick="showTab('timeline')">Timeline</button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Aptitude Test Tab -->
+                <div id="aptitude" class="tab-pane active">
+                    <div class="quiz-container">
+                        <h2>Aptitude & Interest Assessment</h2>
+                        <p>Answer these questions to discover your ideal career path and subject combination.</p>
+                        
+                        <div id="quiz-questions">
+                            <div class="question">
+                                <h3>1. What type of activities do you enjoy most?</h3>
+                                <div class="options">
+                                    <div class="option" onclick="selectOption(this, 'science')" data-value="science">Experiments, solving problems, understanding how things work</div>
+                                    <div class="option" onclick="selectOption(this, 'arts')" data-value="arts">Creative expression, writing, art, music, literature</div>
+                                    <div class="option" onclick="selectOption(this, 'commerce')" data-value="commerce">Business, economics, managing money, entrepreneurship</div>
+                                    <div class="option" onclick="selectOption(this, 'technical')" data-value="technical">Building things, programming, technical skills</div>
+                                </div>
+                            </div>
+                            
+                            <div class="question">
+                                <h3>2. Which subject do you find most interesting?</h3>
+                                <div class="options">
+                                    <div class="option" onclick="selectOption(this, 'math-science')" data-value="math-science">Mathematics and Physics</div>
+                                    <div class="option" onclick="selectOption(this, 'biology')" data-value="biology">Biology and Chemistry</div>
+                                    <div class="option" onclick="selectOption(this, 'language')" data-value="language">Languages and Literature</div>
+                                    <div class="option" onclick="selectOption(this, 'social')" data-value="social">History, Geography, Social Studies</div>
+                                    <div class="option" onclick="selectOption(this, 'accounts')" data-value="accounts">Accounts and Economics</div>
+                                </div>
+                            </div>
+                            
+                            <div class="question">
+                                <h3>3. What kind of work environment appeals to you?</h3>
+                                <div class="options">
+                                    <div class="option" onclick="selectOption(this, 'lab')" data-value="lab">Laboratory or Research facility</div>
+                                    <div class="option" onclick="selectOption(this, 'office')" data-value="office">Corporate office environment</div>
+                                    <div class="option" onclick="selectOption(this, 'creative')" data-value="creative">Creative studios, media houses</div>
+                                    <div class="option" onclick="selectOption(this, 'field')" data-value="field">Field work, outdoor activities</div>
+                                    <div class="option" onclick="selectOption(this, 'healthcare')" data-value="healthcare">Hospitals, healthcare facilities</div>
+                                </div>
+                            </div>
+                            
+                            <div class="question">
+                                <h3>4. What motivates you most?</h3>
+                                <div class="options">
+                                    <div class="option" onclick="selectOption(this, 'innovation')" data-value="innovation">Creating new innovations and discoveries</div>
+                                    <div class="option" onclick="selectOption(this, 'helping')" data-value="helping">Helping people and society</div>
+                                    <div class="option" onclick="selectOption(this, 'success')" data-value="success">Financial success and business growth</div>
+                                    <div class="option" onclick="selectOption(this, 'expression')" data-value="expression">Artistic expression and creativity</div>
+                                </div>
+                            </div>
+                            
+                            <div class="question">
+                                <h3>5. Which skill do you want to develop most?</h3>
+                                <div class="options">
+                                    <div class="option" onclick="selectOption(this, 'analytical')" data-value="analytical">Analytical and logical thinking</div>
+                                    <div class="option" onclick="selectOption(this, 'communication')" data-value="communication">Communication and leadership</div>
+                                    <div class="option" onclick="selectOption(this, 'technical-skills')" data-value="technical-skills">Technical and programming skills</div>
+                                    <div class="option" onclick="selectOption(this, 'creative-skills')" data-value="creative-skills">Creative and artistic skills</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 40px;">
+                            <button class="btn btn-primary" onclick="calculateResults()">Get My Results</button>
+                        </div>
+                        
+                        <div id="quiz-results" style="display: none; margin-top: 40px;">
+                            <div id="recommendation-content"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Career Paths Tab -->
+                <div id="career-paths" class="tab-pane">
+                    <h2>Comprehensive Career Path Mapping</h2>
+                    <p>Explore detailed career paths for each stream with job opportunities, entrance exams, and growth prospects.</p>
+                    
+                    <div class="career-paths">
+                        <div class="career-card">
+                            <h3>Science Stream</h3>
+                            <h4>PCM (Physics, Chemistry, Mathematics)</h4>
+                            <ul class="career-list">
+                                <li><strong>Engineering:</strong> B.Tech/B.E in various branches</li>
+                                <li><strong>Architecture:</strong> B.Arch, Planning</li>
+                                <li><strong>Pure Sciences:</strong> B.Sc Physics, Chemistry, Mathematics</li>
+                                <li><strong>Computer Science:</strong> B.Sc/BCA/B.Tech CS</li>
+                                <li><strong>Aviation:</strong> Pilot training, Aircraft Maintenance</li>
+                                <li><strong>Defense:</strong> NDA, Technical entries</li>
+                                <li><strong>Research:</strong> ISRO, DRDO, BARC</li>
+                            </ul>
+                            
+                            <h4>PCB (Physics, Chemistry, Biology)</h4>
+                            <ul class="career-list">
+                                <li><strong>Medical:</strong> MBBS, BDS, BAMS, BHMS</li>
+                                <li><strong>Allied Health:</strong> Nursing, Physiotherapy, Pharmacy</li>
+                                <li><strong>Biotechnology:</strong> B.Tech/B.Sc Biotech</li>
+                                <li><strong>Environmental Science:</strong> B.Sc Environmental Science</li>
+                                <li><strong>Agriculture:</strong> B.Sc Agriculture, Veterinary</li>
+                                <li><strong>Forensic Science:</strong> B.Sc Forensic Science</li>
+                                <li><strong>Marine Biology:</strong> B.Sc Marine Science</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="career-card">
+                            <h3>Commerce Stream</h3>
+                            <ul class="career-list">
+                                <li><strong>Accounting:</strong> B.Com, CA, CMA, CS</li>
+                                <li><strong>Business Management:</strong> BBA, MBA</li>
+                                <li><strong>Economics:</strong> B.A/B.Sc Economics</li>
+                                <li><strong>Banking & Finance:</strong> BFM, Banking courses</li>
+                                <li><strong>Insurance:</strong> Actuarial Science</li>
+                                <li><strong>Law:</strong> B.Com LLB, BBA LLB</li>
+                                <li><strong>Digital Marketing:</strong> Online marketing courses</li>
+                                <li><strong>Entrepreneurship:</strong> Start-up ventures</li>
+                                <li><strong>Government Jobs:</strong> Banking, SSC, UPSC</li>
+                                <li><strong>Stock Market:</strong> Investment analysis</li>
+                                <li><strong>International Business:</strong> Import/Export</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="career-card">
+                            <h3>Arts/Humanities Stream</h3>
+                            <ul class="career-list">
+                                <li><strong>Literature:</strong> B.A in various languages</li>
+                                <li><strong>Psychology:</strong> B.A Psychology, Clinical Psychology</li>
+                                <li><strong>Social Work:</strong> BSW, MSW</li>
+                                <li><strong>Journalism:</strong> Mass Communication, Media Studies</li>
+                                <li><strong>Law:</strong> B.A LLB, Judiciary</li>
+                                <li><strong>Teaching:</strong> B.Ed, Subject specialization</li>
+                                <li><strong>Civil Services:</strong> IAS, IPS, IFS</li>
+                                <li><strong>Fine Arts:</strong> Painting, Sculpture, Music</li>
+                                <li><strong>Fashion Design:</strong> NIFT, Fashion Technology</li>
+                                <li><strong>History & Archaeology:</strong> Museum studies</li>
+                                <li><strong>Political Science:</strong> Public Administration</li>
+                                <li><strong>Philosophy:</strong> Ethics, Logic</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="career-card">
+                            <h3>Vocational/Technical Streams</h3>
+                            <ul class="career-list">
+                                <li><strong>ITI Courses:</strong> Electrician, Mechanic, Fitter</li>
+                                <li><strong>Diploma:</strong> Engineering diplomas</li>
+                                <li><strong>Computer Courses:</strong> Programming, Web Development</li>
+                                <li><strong>Hospitality:</strong> Hotel Management, Tourism</li>
+                                <li><strong>Beauty & Wellness:</strong> Cosmetology, Spa therapy</li>
+                                <li><strong>Automobile:</strong> Automotive engineering</li>
+                                <li><strong>Electronics:</strong> Electronic maintenance</li>
+                                <li><strong>Construction:</strong> Civil engineering diploma</li>
+                                <li><strong>Agriculture:</strong> Farming techniques</li>
+                                <li><strong>Textiles:</strong> Garment manufacturing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Colleges Directory Tab -->
+                <div id="colleges" class="tab-pane">
+                    <h2>Government & Private Colleges Directory</h2>
+                    <p>Find the best colleges in your state with direct search links and detailed information.</p>
+                    
+                    <div class="colleges-grid">
+                        <!-- Karnataka -->
+                        <div class="state-section">
+                            <h3 class="state-title">Karnataka</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Indian Institute of Science (IISc)</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Bangalore</p>
+                                <p><strong>Courses:</strong> Engineering, Science, Research</p>
+                                <p><strong>Ranking:</strong> #1 in India for Research</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Indian Institute of Science Bangalore')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Bangalore University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Bangalore</p>
+                                <p><strong>Courses:</strong> Arts, Science, Commerce, Law</p>
+                                <p><strong>Established:</strong> 1964</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Bangalore University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Christ University</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Bangalore</p>
+                                <p><strong>Courses:</strong> All streams, Professional courses</p>
+                                <p><strong>Ranking:</strong> Top private university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Christ University Bangalore')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Maharashtra -->
+                        <div class="state-section">
+                            <h3 class="state-title">Maharashtra</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>University of Mumbai</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Mumbai</p>
+                                <p><strong>Courses:</strong> All undergraduate programs</p>
+                                <p><strong>Established:</strong> 1857</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('University of Mumbai')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Fergusson College</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Pune</p>
+                                <p><strong>Courses:</strong> Arts, Science, Commerce</p>
+                                <p><strong>Ranking:</strong> NAAC A+ Grade</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Fergusson College Pune')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Symbiosis International University</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Pune</p>
+                                <p><strong>Courses:</strong> Management, Law, Media</p>
+                                <p><strong>Ranking:</strong> Top deemed university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Symbiosis International University')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Delhi -->
+                        <div class="state-section">
+                            <h3 class="state-title">Delhi</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Delhi University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> New Delhi</p>
+                                <p><strong>Courses:</strong> All undergraduate programs</p>
+                                <p><strong>Colleges:</strong> 90+ affiliated colleges</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Delhi University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Jawaharlal Nehru University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> New Delhi</p>
+                                <p><strong>Courses:</strong> Liberal Arts, Sciences, Languages</p>
+                                <p><strong>Ranking:</strong> Top research university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Jawaharlal Nehru University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Amity University</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Noida</p>
+                                <p><strong>Courses:</strong> Engineering, Management, Law</p>
+                                <p><strong>Ranking:</strong> Top private university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Amity University Noida')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Tamil Nadu -->
+                        <div class="state-section">
+                            <h3 class="state-title">Tamil Nadu</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>University of Madras</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Chennai</p>
+                                <p><strong>Courses:</strong> Arts, Science, Commerce</p>
+                                <p><strong>Established:</strong> 1857</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('University of Madras')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Anna University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Chennai</p>
+                                <p><strong>Courses:</strong> Engineering, Technology</p>
+                                <p><strong>Ranking:</strong> Top technical university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Anna University Chennai')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>SRM Institute of Science and Technology</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Chennai</p>
+                                <p><strong>Courses:</strong> Engineering, Medicine, Management</p>
+                                <p><strong>Ranking:</strong> Top deemed university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('SRM Institute Science Technology')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- West Bengal -->
+                        <div class="state-section">
+                            <h3 class="state-title">West Bengal</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>University of Calcutta</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Kolkata</p>
+                                <p><strong>Courses:</strong> Arts, Science, Commerce, Law</p>
+                                <p><strong>Established:</strong> 1857</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('University of Calcutta')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Jadavpur University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Kolkata</p>
+                                <p><strong>Courses:</strong> Engineering, Arts, Sciences</p>
+                                <p><strong>Ranking:</strong> Top engineering university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Jadavpur University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Techno India University</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Kolkata</p>
+                                <p><strong>Courses:</strong> Engineering, Management, Sciences</p>
+                                <p><strong>Ranking:</strong> Leading private university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Techno India University')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Rajasthan -->
+                        <div class="state-section">
+                            <h3 class="state-title">Rajasthan</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>University of Rajasthan</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Jaipur</p>
+                                <p><strong>Courses:</strong> Arts, Science, Commerce</p>
+                                <p><strong>Established:</strong> 1947</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('University of Rajasthan')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>BITS Pilani</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Pilani</p>
+                                <p><strong>Courses:</strong> Engineering, Sciences, Pharmacy</p>
+                                <p><strong>Ranking:</strong> Premier technical institute</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('BITS Pilani')">View Details</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Uttar Pradesh -->
+                        <div class="state-section">
+                            <h3 class="state-title">Uttar Pradesh</h3>
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Banaras Hindu University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Varanasi</p>
+                                <p><strong>Courses:</strong> All streams, Medical, Engineering</p>
+                                <p><strong>Ranking:</strong> Central university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Banaras Hindu University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Aligarh Muslim University</h4>
+                                    <span class="college-type government">Government</span>
+                                </div>
+                                <p><strong>Location:</strong> Aligarh</p>
+                                <p><strong>Courses:</strong> All undergraduate programs</p>
+                                <p><strong>Ranking:</strong> Central university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Aligarh Muslim University')">View Details</button>
+                            </div>
+                            
+                            <div class="college-card">
+                                <div class="college-header">
+                                    <h4>Amity University</h4>
+                                    <span class="college-type private">Private</span>
+                                </div>
+                                <p><strong>Location:</strong> Lucknow</p>
+                                <p><strong>Courses:</strong> All streams, Professional courses</p>
+                                <p><strong>Ranking:</strong> Top private university</p>
+                                <button class="btn btn-primary btn-small" onclick="searchCollege('Amity University Lucknow')">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Guidance Tab -->
+                <div id="ai-guidance" class="tab-pane">
+                    <div class="ai-assessment">
+                        <h2>AI-Powered Career Guidance</h2>
+                        <p>Get personalized advice from our AI assistant. Share your interests, concerns, or questions about your career path.</p>
+                        
+                        <textarea 
+                            id="user-query" 
+                            class="assessment-input" 
+                            placeholder="Ask me anything about your career choices, college selections, or future prospects. For example: 'I'm interested in both science and arts. How do I choose between them?' or 'What are the job prospects for computer science graduates?'"
+                        ></textarea>
+                        
+                        <button class="btn btn-primary" onclick="getAIGuidance()">Get AI Guidance</button>
+                        
+                        <div class="loading" id="ai-loading">
+                            <div class="spinner"></div>
+                            <p>AI is analyzing your query...</p>
+                        </div>
+                        
+                        <div id="ai-response-container" class="ai-response" style="display: none;">
+                            <h3>AI Guidance:</h3>
+                            <div id="ai-response-text"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h3>Quick AI Assessments</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                            <button class="btn btn-secondary" onclick="quickAssessment('stream-selection')">Stream Selection Help</button>
+                            <button class="btn btn-secondary" onclick="quickAssessment('college-choice')">College Selection Guide</button>
+                            <button class="btn btn-secondary" onclick="quickAssessment('career-prospects')">Career Prospects Analysis</button>
+                            <button class="btn btn-secondary" onclick="quickAssessment('skill-development')">Skill Development Plan</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Tab -->
+                <div id="timeline" class="tab-pane">
+                    <h2>Academic Timeline & Important Dates</h2>
+                    <p>Stay updated with admission dates, entrance exams, and scholarship deadlines.</p>
+                    
+                    <div class="timeline-container">
+                        <div class="timeline-item">
+                            <div class="timeline-date">March - April</div>
+                            <div class="timeline-title">Class 12 Board Results</div>
+                            <div class="timeline-description">
+                                Most state boards and CBSE release Class 12 results. Start preparing for college applications immediately after results.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">April - May</div>
+                            <div class="timeline-title">College Application Period</div>
+                            <div class="timeline-description">
+                                Most universities open their application process. Research colleges, prepare documents, and apply early for better chances.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">May - June</div>
+                            <div class="timeline-title">Entrance Exams</div>
+                            <div class="timeline-description">
+                                JEE Main, NEET, CLAT, and other entrance exams are conducted. Prepare well and register on time.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">June - July</div>
+                            <div class="timeline-title">Merit Lists & Counseling</div>
+                            <div class="timeline-description">
+                                Universities release merit lists and start counseling process. Keep all documents ready for verification.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">July - August</div>
+                            <div class="timeline-title">Admissions & Classes Begin</div>
+                            <div class="timeline-description">
+                                Final admissions are completed and new academic session starts. Complete all formalities on time.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">Throughout the Year</div>
+                            <div class="timeline-title">Scholarship Applications</div>
+                            <div class="timeline-description">
+                                Various scholarships open throughout the year. Keep checking government and private scholarship portals regularly.
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">October - December</div>
+                            <div class="timeline-title">Next Year Preparation</div>
+                            <div class="timeline-description">
+                                Start preparing for next year's entrance exams if you're in Class 11 or planning to retake exams.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.2);">
+                        <h3>Important Reminders</h3>
+                        <ul style="list-style-type: none; padding: 0;">
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Keep all documents ready: Mark sheets, certificates, ID proofs</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Apply for scholarships early - many have limited seats</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Stay in touch with college admission offices for updates</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Regularly check university websites for important announcements</li>
+                            <li style="padding: 8px 0;">Set up notifications for application deadlines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let quizAnswers = {};
+        let userData = {};
+        const GEMINI_API_KEY = 'AIzaSyAo0mfUd-eNI6b_AaSdU6G3GNu4L0CvYKY';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+        
+        // Initialize stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 100;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+            
+            // Add shooting stars
+            for (let i = 0; i < 3; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(shootingStar);
+            }
+        }
+        
+        // Enter platform function
+        function enterPlatform() {
+            const fullName = document.getElementById('fullName')?.value;
+            const email = document.getElementById('email')?.value;
+            const currentClass = document.getElementById('currentClass')?.value;
+            
+            // Store user data
+            if (fullName && email && currentClass) {
+                userData = {
+                    name: fullName,
+                    email: email,
+                    class: currentClass
+                };
+            }
+            
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('mainPlatform').style.display = 'block';
+        }
+        
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab panes
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            tabPanes.forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab pane
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+        }
+        
+        // Quiz functionality
+        function selectOption(element, category) {
+            const question = element.closest('.question');
+            const questionIndex = Array.from(question.parentNode.children).indexOf(question);
+            
+            // Remove selected class from all options in this question
+            const options = question.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            element.classList.add('selected');
+            
+            // Store answer
+            quizAnswers[questionIndex] = {
+                category: category,
+                value: element.dataset.value
+            };
+        }
+        
+        function calculateResults() {
+            if (Object.keys(quizAnswers).length < 5) {
+                alert('Please answer all questions before getting results!');
+                return;
+            }
+            
+            // Count category preferences
+            const preferences = [];
+            Object.values(quizAnswers).forEach(answer => {
+                preferences.push(answer.value);
+            });
+            
+            // Enhanced logic for stream recommendation with detailed reasoning
+            let recommendedStream = '';
+            let reasoning = '';
+            let careers = [];
+            let alternativeRecommendations = [];
+            
+            if (preferences.includes('science') || preferences.includes('math-science') || preferences.includes('lab') || preferences.includes('innovation') || preferences.includes('analytical')) {
+                recommendedStream = 'Science Stream (PCM/PCB)';
+                reasoning = 'Your strong analytical thinking, interest in problem-solving, and preference for laboratory environments indicate a natural fit for scientific pursuits. Your curiosity about how things work and desire for innovation align perfectly with the science stream, where you can explore complex concepts and contribute to technological advancement.';
+                careers = [
+                    'Engineering (B.Tech/B.E)',
+                    'Medical (MBBS/BDS)',
+                    'Research Scientist',
+                    'Software Developer',
+                    'Biotechnology',
+                    'Architecture'
+                ];
+                alternativeRecommendations = [
+                    {
+                        title: 'Commerce with Mathematics',
+                        reason: 'Your analytical skills could excel in financial analysis and business mathematics',
+                        courses: ['B.Com with Computer Applications', 'Actuarial Science', 'Financial Engineering']
+                    },
+                    {
+                        title: 'Applied Sciences',
+                        reason: 'Bridge practical applications with scientific knowledge',
+                        courses: ['Environmental Science', 'Forensic Science', 'Data Science']
+                    }
+                ];
+            } else if (preferences.includes('commerce') || preferences.includes('accounts') || preferences.includes('office') || preferences.includes('success')) {
+                recommendedStream = 'Commerce Stream';
+                reasoning = 'Your interest in business dynamics, economic systems, and financial success demonstrates a strong commercial mindset. Your preference for office environments and motivation by business growth shows you have the entrepreneurial spirit and practical approach needed for commerce-related careers.';
+                careers = [
+                    'Chartered Accountancy (CA)',
+                    'Business Management (BBA/MBA)',
+                    'Banking & Finance',
+                    'Entrepreneurship',
+                    'Economics',
+                    'Company Secretary (CS)'
+                ];
+                alternativeRecommendations = [
+                    {
+                        title: 'Science with Commerce Applications',
+                        reason: 'Your analytical approach could benefit scientific business applications',
+                        courses: ['Biotechnology Business', 'Engineering Management', 'Technology Commercialization']
+                    },
+                    {
+                        title: 'Arts with Business Focus',
+                        reason: 'Communication skills combined with business acumen',
+                        courses: ['Business Communication', 'Digital Marketing', 'International Relations']
+                    }
+                ];
+            } else if (preferences.includes('arts') || preferences.includes('language') || preferences.includes('creative') || preferences.includes('expression') || preferences.includes('communication')) {
+                recommendedStream = 'Arts/Humanities Stream';
+                reasoning = 'Your creative nature, strong communication skills, and interest in human expression indicate a perfect match for arts and humanities. Your preference for creative environments and motivation through artistic expression shows you have the sensitivity and vision needed for impactful careers in this field.';
+                careers = [
+                    'Journalism & Mass Communication',
+                    'Psychology',
+                    'Literature & Languages',
+                    'Law (LLB)',
+                    'Social Work',
+                    'Civil Services (IAS/IPS)',
+                    'Teaching & Education'
+                ];
+                alternativeRecommendations = [
+                    {
+                        title: 'Creative Commerce',
+                        reason: 'Your creativity could drive innovative business solutions',
+                        courses: ['Advertising & Marketing', 'Event Management', 'Fashion Business']
+                    },
+                    {
+                        title: 'Applied Arts with Technology',
+                        reason: 'Merge creativity with modern digital platforms',
+                        courses: ['Digital Media Design', 'User Experience Design', 'Content Creation']
+                    }
+                ];
+            } else {
+                recommendedStream = 'Mixed Interests - Multiple Pathways';
+                reasoning = 'Your diverse interests across multiple domains show a well-rounded personality with varied strengths. This versatility is valuable in today\'s interconnected world where interdisciplinary knowledge is highly sought after. Consider programs that allow you to explore multiple interests.';
+                careers = [
+                    'Liberal Arts programs',
+                    'Interdisciplinary studies',
+                    'Vocational courses',
+                    'Skill-based programs'
+                ];
+                alternativeRecommendations = [
+                    {
+                        title: 'Integrated Programs',
+                        reason: 'Combine multiple streams in one comprehensive course',
+                        courses: ['BBA-MBA Integrated', 'B.Tech-MBA Dual Degree', 'Liberal Arts with Minor']
+                    },
+                    {
+                        title: 'Skill-Based Learning',
+                        reason: 'Focus on practical skills that transcend traditional boundaries',
+                        courses: ['Digital Marketing', 'Project Management', 'Data Analytics']
+                    }
+                ];
+            }
+            
+            // Display enhanced results
+            const resultsDiv = document.getElementById('quiz-results');
+            const contentDiv = document.getElementById('recommendation-content');
+            
+            contentDiv.innerHTML = `
+                <div class="enhanced-results">
+                    <div class="result-main">
+                        <h3 class="result-title">${recommendedStream}</h3>
+                        <div class="result-reasoning">
+                            <h4 style="color: #667eea; margin-bottom: 10px;">Why This Path Suits You:</h4>
+                            <p style="line-height: 1.6;">${reasoning}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 15px; margin: 20px 0;">
+                        <h4 style="color: #667eea; margin-bottom: 15px;">Primary Career Paths:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                            ${careers.map(career => `<div style="padding: 8px 12px; background: rgba(102, 126, 234, 0.2); border-radius: 8px; text-align: center; font-size: 14px;">${career}</div>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="alternative-recommendations">
+                        <h4 style="color: #667eea; margin-bottom: 20px; text-align: center;">Alternative Recommendations</h4>
+                        ${alternativeRecommendations.map(alt => `
+                            <div class="recommendation-card">
+                                <h5 style="color: #667eea; margin-bottom: 10px;">${alt.title}</h5>
+                                <p style="font-size: 14px; opacity: 0.9; margin-bottom: 15px;">${alt.reason}</p>
+                                <div>
+                                    <strong style="font-size: 13px;">Suggested Courses:</strong>
+                                    ${alt.courses.map(course => `<div style="font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">• ${course}</div>`).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 20px; background: rgba(102, 126, 234, 0.1); border-radius: 12px; border: 1px solid rgba(102, 126, 234, 0.3);">
+                        <h4 style="color: #667eea; margin-bottom: 15px;">Your Next Steps:</h4>
+                        <ol style="padding-left: 20px; line-height: 1.8;">
+                            <li>Research colleges offering your preferred courses</li>
+                            <li>Check entrance exam requirements and start preparation</li>
+                            <li>Connect with professionals or students in your chosen field</li>
+                            <li>Consider internships or skill development programs</li>
+                            <li>Use our AI Guidance for personalized advice on specific questions</li>
+                            <li>Explore our Colleges Directory for detailed institution information</li>
+                        </ol>
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.style.display = 'block';
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // College search functionality
+        function searchCollege(collegeName) {
+            const searchQuery = encodeURIComponent(collegeName + ' admission eligibility courses fees');
+            const searchUrl = `https://www.google.com/search?q=${searchQuery}`;
+            window.open(searchUrl, '_blank');
+        }
+        
+        // AI Guidance functionality
+        async function getAIGuidance() {
+            const userQuery = document.getElementById('user-query').value.trim();
+            
+            if (!userQuery) {
+                alert('Please enter your question or concern to get AI guidance.');
+                return;
+            }
+            
+            const loadingDiv = document.getElementById('ai-loading');
+            const responseContainer = document.getElementById('ai-response-container');
+            const responseText = document.getElementById('ai-response-text');
+            
+            // Show loading
+            loadingDiv.style.display = 'block';
+            responseContainer.style.display = 'none';
+            
+            try {
+                const userContext = userData.name ? `Student: ${userData.name}, Class: ${userData.class}` : 'Anonymous student';
+                
+                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `You are a career guidance counselor helping Indian students choose their career paths after Class 12. 
+                                
+                                ${userContext}
+                                Student's Question: "${userQuery}"
+                                
+                                Please provide comprehensive guidance covering:
+                                1. Direct answer to their question
+                                2. Relevant career options and streams
+                                3. Specific colleges or courses they should consider
+                                4. Skills they need to develop
+                                5. Practical next steps they can take
+                                
+                                Keep the response encouraging, practical, and specific to the Indian education system. Include both government and private options where relevant.`
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 1000,
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                    const aiResponse = data.candidates[0].content.parts[0].text;
+                    responseText.innerHTML = formatAIResponse(aiResponse);
+                } else {
+                    throw new Error('Invalid response format from AI');
+                }
+                
+            } catch (error) {
+                console.error('AI API Error:', error);
+                responseText.innerHTML = `
+                    <div style="color: #ff6b6b; background: rgba(255,107,107,0.1); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,107,107,0.3);">
+                        <strong>AI Service Temporarily Unavailable</strong><br>
+                        I'm having trouble connecting to the AI service right now. Here's some general guidance based on your question:
+                        <br><br>
+                        <strong>For career guidance:</strong> Consider speaking with school counselors, visiting college websites, or contacting admission offices directly.
+                        <br><br>
+                        <strong>For stream selection:</strong> Match your interests with career outcomes, consider job market trends, and talk to professionals in fields you're interested in.
+                        <br><br>
+                        Please try the AI guidance again in a few minutes, or use our other resources like the Aptitude Test and Career Paths sections.
+                    </div>
+                `;
+            }
+            
+            // Hide loading and show response
+            loadingDiv.style.display = 'none';
+            responseContainer.style.display = 'block';
+            responseContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function formatAIResponse(response) {
+            // Format the AI response with proper HTML structure
+            return response
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>')
+                .replace(/(\d+\.)/g, '<br><strong>$1</strong>')
+                .replace(/•/g, '<br>•');
+        }
+        
+        async function quickAssessment(type) {
+            const queries = {
+                'stream-selection': 'I am confused about choosing between Science, Commerce, and Arts streams after Class 12. How do I decide which stream is best for me?',
+                'college-choice': 'How do I choose between government and private colleges? What factors should I consider when selecting a college?',
+                'career-prospects': 'What are the current job market trends in India? Which careers have the best growth prospects?',
+                'skill-development': 'What skills should I develop alongside my degree to be more employable? How can I build practical skills?'
+            };
+            
+            document.getElementById('user-query').value = queries[type];
+            await getAIGuidance();
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            console.log('Digital Career Guidance Platform loaded successfully!');
+        });
+    </script>
+</body>
+</html>
